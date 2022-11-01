@@ -1,0 +1,61 @@
+import { StatusBar } from 'expo-status-bar';
+import { React, useState } from 'react';
+import { Text, ImageBackground, StyleSheet, Image, View, Dimensions, TextInput, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from '../screens/HomeScreen';
+import Login from '../screens/Login';
+import AccountScreen from '../screens/AccountScreen';
+import ContactScreen from '../screens/ContactScreen';
+import ChatScreen from '../screens/ChatScreen';
+import { Menu, MenuItem} from 'react-native-material-menu';
+
+const SCREEN_WIDTH = Dimensions.get('screen').width;
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+export default function TabNavigator() {
+    const [visible, setVisible] = useState(false);
+    const hideMenu = () => setVisible(false);
+    const showMenu = () => setVisible(true);
+    return (
+        <View style={styles.container}>
+            <View style={{ height: 37, backgroundColor: '#3643ff', width: SCREEN_WIDTH }}></View>
+            <View style={{ width: SCREEN_WIDTH, height: 50, backgroundColor: '#3989ff', flexDirection: 'row', alignItems: 'center' }}>
+                <Image style={{ width: 20, height: 20, marginLeft: 20 }} source={require("../assets/search.png")} />
+                <TextInput style={{ height: 30, width: 250, borderWidth: 0.1, backgroundColor: '#3989ff', marginLeft: 20 }} placeholder='Tìm kiếm'></TextInput>
+                <View style={{ paddingLeft:40 }}>
+                    <Menu
+                        visible={visible}
+                        anchor={<TouchableOpacity onPress={() => setVisible(true)}><Image style={{ width: 22, height: 22}} source={require("../assets/plus.png")} /></TouchableOpacity>}
+                        onRequestClose={hideMenu}
+                    >
+                        <MenuItem onPress={hideMenu}>
+                        <Image style={{ width: 20, height: 20}} source={require("../assets/addfriend.png")}/>    Thêm bạn
+                        </MenuItem>
+                        <MenuItem onPress={hideMenu}><Image style={{ width: 20, height: 20}} source={require("../assets/addgroup.png")}/>  Tạo nhóm
+                        </MenuItem>
+                    </Menu>
+                </View>
+            </View>
+            <Tab.Navigator screenOptions={{ headerShown: false }}>
+                <Tab.Screen name="Nhắn tin" component={HomeScreen} options={{
+                    tabBarIcon: () => (<Image source={require("./../assets/message-icon.png")} style={{ width: 22, height: 20 }} />),
+                }} />
+                <Tab.Screen name="Danh bạ" component={ContactScreen} options={{
+                    tabBarIcon: () => (<Image source={require("./../assets/contact.png")} style={{ width: 20, height: 20 }} />)
+                }} />
+                <Tab.Screen name="Cá nhân" component={AccountScreen} options={{
+                    tabBarIcon: () => (<Image source={require("./../assets/home.png")} style={{ width: 20, height: 20 }} />)
+                }} />
+            </Tab.Navigator>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+});
