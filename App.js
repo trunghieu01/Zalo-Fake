@@ -8,6 +8,8 @@ import ChatScreen from './screens/ChatScreen';
 import AccountScreen from './screens/AccountScreen';
 import Register from './screens/Register';
 import TabNavigator from './navigations/TabNavigator';
+import AddFriend from './screens/AddFriend';
+import CreateGroup from './screens/CreateGroup';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -18,6 +20,8 @@ export default function App() {
         <Stack.Screen name="Register" component={Register}/>
         <Stack.Screen name="Home" component={TabNavigator} />
         <Stack.Screen name="Chat" component={ChatScreen} />
+        <Stack.Screen name="AddFriend" component={AddFriend}/>
+        <Stack.Screen name="CreateGroup" component={CreateGroup}/>
       </Stack.Navigator>
     </NavigationContainer >
   )

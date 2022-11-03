@@ -10,9 +10,10 @@ export default function ChatScreen({ navigation }) {
   var [name, setName] = useState("name")
   useEffect(() => {
     if (route.params != null)
-      setName(route.params.name[1])
+      setName(route.params.name[0])
   }, [])
   const user = useRef(route.params.idCurrent)
+  console.log(user.current)
   const [messages, setMessages] = useState([])
   const obj = []
   const [lastID, setLastID] = useState("")
@@ -108,7 +109,7 @@ export default function ChatScreen({ navigation }) {
         method: "POST",
         body: JSON.stringify({
           id: lastID,
-          id_sender: "0",
+          id_sender: user.current,
           id_group: route.params.id,
           content: text,
           time: millis.getHours() + ":" + millis.getMinutes(),

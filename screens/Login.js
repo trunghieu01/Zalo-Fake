@@ -19,8 +19,9 @@ export default function Login({ navigation }) {
     if(obj[index].email == userName && obj[index].password == password){
       navigation.navigate('Home', {
         screen: 'Nhắn tin',
-        params: { id: obj[index].id },
+        params: { id: obj[index].id, name: obj[index].name },
       });
+      console.log(obj[index].name)
     }
     }
   }

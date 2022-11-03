@@ -9,31 +9,43 @@ import Login from '../screens/Login';
 import AccountScreen from '../screens/AccountScreen';
 import ContactScreen from '../screens/ContactScreen';
 import ChatScreen from '../screens/ChatScreen';
-import { Menu, MenuItem} from 'react-native-material-menu';
+import { Menu, MenuItem } from 'react-native-material-menu';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-export default function TabNavigator() {
+export default function TabNavigator({ navigation, route }) {
     const [visible, setVisible] = useState(false);
+    const nameCurrent = route.params.params.name
+    const idCurrent = route.params.params.id
+    console.log(route.params.params)
+    const addfriend = () => {
+        setVisible(false)
+        navigation.navigate('AddFriend')
+    };
+
+    const createGroup = () => {
+        setVisible(false)
+        navigation.navigate('CreateGroup', { nameCurrent: nameCurrent, idCurrent: idCurrent })
+    };
     const hideMenu = () => setVisible(false);
-    const showMenu = () => setVisible(true);
     return (
         <View style={styles.container}>
             <View style={{ height: 37, backgroundColor: '#3643ff', width: SCREEN_WIDTH }}></View>
             <View style={{ width: SCREEN_WIDTH, height: 50, backgroundColor: '#3989ff', flexDirection: 'row', alignItems: 'center' }}>
                 <Image style={{ width: 20, height: 20, marginLeft: 20 }} source={require("../assets/search.png")} />
                 <TextInput style={{ height: 30, width: 250, borderWidth: 0.1, backgroundColor: '#3989ff', marginLeft: 20 }} placeholder='Tìm kiếm'></TextInput>
-                <View style={{ paddingLeft:40 }}>
+                <View style={{ paddingLeft: 40 }}>
                     <Menu
                         visible={visible}
-                        anchor={<TouchableOpacity onPress={() => setVisible(true)}><Image style={{ width: 22, height: 22}} source={require("../assets/plus.png")} /></TouchableOpacity>}
+                        anchor={<TouchableOpacity onPress={() => setVisible(true)}><Image style={{ width: 22, height: 22 }} source={require("../assets/plus.png")} /></TouchableOpacity>}
                         onRequestClose={hideMenu}
                     >
-                        <MenuItem onPress={hideMenu}>
-                        <Image style={{ width: 20, height: 20}} source={require("../assets/addfriend.png")}/>    Thêm bạn
+                        <MenuItem onPress={addfriend}>
+                            <Image style={{ width: 20, height: 20 }} source={require("../assets/addfriend.png")} />    Thêm bạn
                         </MenuItem>
-                        <MenuItem onPress={hideMenu}><Image style={{ width: 20, height: 20}} source={require("../assets/addgroup.png")}/>  Tạo nhóm
+                        <MenuItem onPress={createGroup}>
+                            <Image style={{ width: 20, height: 20 }} source={require("../assets/addgroup.png")} />  Tạo nhóm
                         </MenuItem>
                     </Menu>
                 </View>
