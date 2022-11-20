@@ -7,11 +7,13 @@ import ContactPersonScreen from './ContactPersonScreen';
 const Tab = createMaterialTopTabNavigator();
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
-export default function ContactScreen({ navigation }) {
+export default function ContactScreen({ route }) {
+  const nameCurrent = route.params.name
+  const idCurrent = route.params.id
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Cá nhân" component={ContactPersonScreen} />
-      <Tab.Screen name="Nhóm" component={ContactGroupScreen} />
+      <Tab.Screen name="Cá nhân" component={ContactPersonScreen} initialParams={{ id: idCurrent, name: nameCurrent }} />
+      <Tab.Screen name="Nhóm" component={ContactGroupScreen} initialParams={{ id: idCurrent, name: nameCurrent }} />
     </Tab.Navigator>
   );
 }

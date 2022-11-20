@@ -10,6 +10,9 @@ import Register from './screens/Register';
 import TabNavigator from './navigations/TabNavigator';
 import AddFriend from './screens/AddFriend';
 import CreateGroup from './screens/CreateGroup';
+import GroupManager from './screens/GroupManager';
+import AddMember from './screens/AddMenber';
+import ViewMember from './screens/ViewMember';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -22,6 +25,9 @@ export default function App() {
         <Stack.Screen name="Chat" component={ChatScreen} />
         <Stack.Screen name="AddFriend" component={AddFriend}/>
         <Stack.Screen name="CreateGroup" component={CreateGroup}/>
+        <Stack.Screen name="GroupManager" component={GroupManager}/>
+        <Stack.Screen name="AddMember" component={AddMember}/>
+        <Stack.Screen name="ViewMember" component={ViewMember}/>
       </Stack.Navigator>
     </NavigationContainer >
   )

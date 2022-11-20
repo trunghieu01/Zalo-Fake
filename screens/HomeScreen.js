@@ -9,7 +9,7 @@ export default function HomeScreen({ navigation, route }) {
     if (route.params != null)
       setIdCurrent(route.params.id)
   }, []);
-  console.log(route.params)
+  // console.log(route.params)
 
   useEffect(() => {
     if (route.params != null)
@@ -42,16 +42,14 @@ export default function HomeScreen({ navigation, route }) {
     }
   }
   nameGroup()
-  console.log(obj)
   const image = require('../assets/empty-avatar.jpg')
-
 
   return (
     <View style={styles.container}>
       <FlatList
         data={obj}
         renderItem={({ item }) =>
-          <TouchableOpacity onPress={() => navigation.navigate('Chat', { name: item.name, id: item.id, idCurrent: idCurrent })} style={{ height: 75, flexDirection: 'row', borderWidth: 1, borderColor: "#C4C4C4", backgroundColor: '#F6F6F6' }}>
+          <TouchableOpacity onPress={() => navigation.navigate('Chat', { name: item.name, id: item.id, idCurrent: idCurrent, isGroup: item.isGroup , idMember:item.id_member, idAdmin:item.idAdmin, idGroup : item.id, nameCurrent:nameCurrent})} style={{ height: 75, flexDirection: 'row', borderWidth: 1, borderColor: "#C4C4C4", backgroundColor: '#F6F6F6' }}>
             <Image style={{ width: 70, height: 70, borderRadius: 30 }} source={image}></Image>
             <View style={{ padding: 10 }}>
               <Text style={{ fontSize: 17 }}>{item.name[0]}</Text>

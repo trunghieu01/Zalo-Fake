@@ -21,7 +21,7 @@ export default function Login({ navigation }) {
         screen: 'Nhắn tin',
         params: { id: obj[index].id, name: obj[index].name },
       });
-      console.log(obj[index].name)
+      // console.log(obj[index].name)
     }
     }
   }

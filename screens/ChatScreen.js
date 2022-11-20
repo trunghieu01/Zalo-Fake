@@ -7,13 +7,22 @@ import { useRoute } from '@react-navigation/native';
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 export default function ChatScreen({ navigation }) {
   const route = useRoute();
+  const idGroup = route.params.idGroup
+  const isGroup = route.params.isGroup
+  const idMember = route.params.idMember
+  const idAdmin = route.params.idAdmin
+  const idCurrent = route.params.idCurrent
+  const nameCurrent = route.params.nameCurrent
+  console.log(nameCurrent)
+
+  // console.log(idAdmin)
   var [name, setName] = useState("name")
   useEffect(() => {
     if (route.params != null)
       setName(route.params.name[0])
   }, [])
   const user = useRef(route.params.idCurrent)
-  console.log(user.current)
+  // console.log(user.current)
   const [messages, setMessages] = useState([])
   const obj = []
   const [lastID, setLastID] = useState("")
@@ -30,7 +39,7 @@ export default function ChatScreen({ navigation }) {
         const count = data.length
         setLastID(data[count])
         setMessages(obj)
-        console.log(count)
+        // console.log(count)
       })
   }, [text])
 
@@ -39,7 +48,7 @@ export default function ChatScreen({ navigation }) {
   const showMenu = () => setVisible(true);
   const millis = new Date();
   // console.log(millis.getHours() + ":" + millis.getMinutes());
-  
+
   const scrollView = useRef();
 
   const Message = ({ time, isLeft, title, id, image }) => {
@@ -82,7 +91,7 @@ export default function ChatScreen({ navigation }) {
                 <MenuItem onPress={hideMenu}><Image style={{ width: 18, height: 18 }} source={require("../assets/delete.png")} />   Xóa</MenuItem>
                 <MenuItem onPress={() => {
                   messages[id].content = 'Đã thu hồi';
-                  console.log(id)
+                  // console.log(id)
                   setVisible(false);
                 }}><Image style={{ width: 20, height: 20 }} source={require("../assets/undo.png")} />  Thu hồi</MenuItem>
               </Menu>
@@ -127,7 +136,9 @@ export default function ChatScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image style={{ width: 23, height: 15, marginLeft: 20 }} source={require("../assets/back-icon.png")} />
         </TouchableOpacity>
-        <Image style={{ width: 40, height: 40, borderRadius: 30, marginLeft: 5 }} source={require('../assets/empty-avatar.jpg')}></Image>
+        <TouchableOpacity onPress={() => { if (isGroup) navigation.navigate("GroupManager", { name: name, idMember: idMember, idAdmin: idAdmin, idCurrent:idCurrent, idGroup: idGroup, nameCurrent: nameCurrent }) }}>
+          <Image style={{ width: 40, height: 40, borderRadius: 30, marginLeft: 5 }} source={require('../assets/empty-avatar.jpg')}></Image>
+        </TouchableOpacity>
         <View style={{ marginLeft: 5 }}>
           <Text style={{ fontSize: 18, fontWeight: '500', color: 'white' }}>{name}</Text>
           <Text style={{ fontSize: 12, fontWeight: '350', color: 'white', marginLeft: 3 }}>Truy cập 5 phút trước</Text>
@@ -183,7 +194,7 @@ const styles = StyleSheet.create({
   messageView: {
     backgroundColor: "transparent",
     maxWidth: "80%",
-    flexDirection:'column'
+    flexDirection: 'column'
   },
   timeView: {
     flexDirection: 'row',

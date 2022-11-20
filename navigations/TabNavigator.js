@@ -1,27 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import { React, useState } from 'react';
 import { Text, ImageBackground, StyleSheet, Image, View, Dimensions, TextInput, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from '../screens/HomeScreen';
-import Login from '../screens/Login';
 import AccountScreen from '../screens/AccountScreen';
 import ContactScreen from '../screens/ContactScreen';
-import ChatScreen from '../screens/ChatScreen';
 import { Menu, MenuItem } from 'react-native-material-menu';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
 export default function TabNavigator({ navigation, route }) {
     const [visible, setVisible] = useState(false);
     const nameCurrent = route.params.params.name
     const idCurrent = route.params.params.id
-    console.log(route.params.params)
+    // console.log(route.params.params)
     const addfriend = () => {
         setVisible(false)
-        navigation.navigate('AddFriend')
+        navigation.navigate('AddFriend', { nameCurrent: nameCurrent, idCurrent: idCurrent })
     };
 
     const createGroup = () => {
@@ -54,12 +50,16 @@ export default function TabNavigator({ navigation, route }) {
                 <Tab.Screen name="Nhắn tin" component={HomeScreen} options={{
                     tabBarIcon: () => (<Image source={require("./../assets/message-icon.png")} style={{ width: 22, height: 20 }} />),
                 }} />
-                <Tab.Screen name="Danh bạ" component={ContactScreen} options={{
-                    tabBarIcon: () => (<Image source={require("./../assets/contact.png")} style={{ width: 20, height: 20 }} />)
-                }} />
-                <Tab.Screen name="Cá nhân" component={AccountScreen} options={{
-                    tabBarIcon: () => (<Image source={require("./../assets/home.png")} style={{ width: 20, height: 20 }} />)
-                }} />
+                <Tab.Screen name="Danh bạ" component={ContactScreen}
+                    initialParams={{ id: idCurrent, name: nameCurrent }}
+                    options={{
+                        tabBarIcon: () => (<Image source={require("./../assets/contact.png")} style={{ width: 20, height: 20 }} />)
+                    }} />
+                <Tab.Screen name="Cá nhân" component={AccountScreen}
+                    initialParams={{ id: idCurrent, name: nameCurrent }}
+                    options={{
+                        tabBarIcon: () => (<Image source={require("./../assets/home.png")} style={{ width: 20, height: 20 }} />)
+                    }} />
             </Tab.Navigator>
         </View>
     );
